@@ -14,28 +14,43 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
-  role  String
+  id      Int      @id @default(autoincrement())
+  email   String   @unique
+  name    String
+  role    String
+  profile Profile?
+  posts   Post[]
+
+  @@map("users")
 }
 
 model Profile {
   id     Int    @id @default(autoincrement())
   bio    String
   userId Int    @unique
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("profiles")
 }
 
 model Post {
   id         Int      @id @default(autoincrement())
   title      String
   autorId    Int
+  author     User     @relation(fields: [autorId], references: [id])
   categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
   createAt   DateTime @default(now())
   updateAt   DateTime @default(now())
+
+  @@map("posts")
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[]
+
+  @@map("categories")
 }
