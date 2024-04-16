@@ -35,8 +35,25 @@ const updateUser = async (req: Request, res: Response) => {
     });
   }
 };
+const getAllUser = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.getAllUserService();
 
+    res.send({
+      status: true,
+      message: "data retrive success",
+      data: result,
+    });
+  } catch (error) {
+    res.send({
+      status: false,
+      message: "no data exist",
+      err: error,
+    });
+  }
+};
 export const userController = {
   createUser,
   updateUser,
+  getAllUser,
 };

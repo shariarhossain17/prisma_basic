@@ -34,8 +34,18 @@ const updateUserService = async (data: Profile): Promise<Profile> => {
 
   return result;
 };
+const getAllUserService = async () => {
+  const result = await prisma.user.findMany({
+    select: {
+      name: true,
+      profile: true,
+    },
+  });
 
+  return result;
+};
 export const userService = {
   createUserService,
   updateUserService,
+  getAllUserService,
 };
