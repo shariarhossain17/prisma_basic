@@ -18,7 +18,43 @@ const createPost = async (req: Request, res: Response) => {
     });
   }
 };
+const getAllPost = async (req: Request, res: Response) => {
+  try {
+    const result = await postService.getAllPostService();
 
+    res.send({
+      status: true,
+      message: "get success",
+      data: result,
+    });
+  } catch (error) {
+    res.send({
+      status: false,
+      message: "failed",
+      err: error,
+    });
+  }
+};
+
+const getSinglePost = async (req: Request, res: Response) => {
+  try {
+    const result = await postService.getSinglePostService(req.params.id);
+
+    res.send({
+      status: true,
+      message: "get success",
+      data: result,
+    });
+  } catch (error) {
+    res.send({
+      status: false,
+      message: "failed",
+      err: error,
+    });
+  }
+};
 export const postController = {
   createPost,
+  getAllPost,
+  getSinglePost,
 };
