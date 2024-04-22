@@ -22,10 +22,12 @@ const getAllPost = async (req: Request, res: Response) => {
   try {
     const option = req.query;
     const result = await postService.getAllPostService(option);
+
     res.send({
       status: true,
       message: "get success",
-      data: result,
+      total: result.totalCount,
+      data: result.data,
     });
   } catch (error) {
     res.send({
@@ -53,8 +55,45 @@ const getSinglePost = async (req: Request, res: Response) => {
     });
   }
 };
+
+const updatePost = async (req: Request, res: Response) => {
+  try {
+    const result = await postService.updatePost(req.params.id, req.body);
+
+    res.send({
+      status: true,
+      message: "get success",
+      data: result,
+    });
+  } catch (error) {
+    res.send({
+      status: false,
+      message: "failed",
+      err: error,
+    });
+  }
+};
+const deletePost = async (req: Request, res: Response) => {
+  try {
+    const result = await postService.deletePost(req.params.id);
+
+    res.send({
+      status: true,
+      message: "get success",
+      data: result,
+    });
+  } catch (error) {
+    res.send({
+      status: false,
+      message: "failed",
+      err: error,
+    });
+  }
+};
 export const postController = {
   createPost,
   getAllPost,
   getSinglePost,
+  updatePost,
+  deletePost,
 };
